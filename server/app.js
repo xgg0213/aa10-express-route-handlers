@@ -51,6 +51,19 @@ app.post('/artists', (req, res) => {
   res.status(201).send(resBody);
 })
 
+// bonus
+// get latest artist
+app.get('/artists/latest', (req, res) => {
+  const latestArtist = getLatestArtist();
+  res.status(200).send(latestArtist);
+})
+
+// Get all albums of the latest artist
+app.get('/artists/latest/albums', (req, res) => {
+  const albums = getAlbumsForLatestArtist();
+  res.status(200).send(albums);
+})
+
 
 // DO NOT MODIFY
 if (require.main === module) {
