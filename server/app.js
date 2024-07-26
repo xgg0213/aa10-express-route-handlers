@@ -64,6 +64,77 @@ app.get('/artists/latest/albums', (req, res) => {
   res.status(200).send(albums);
 })
 
+// Edit a specified artist by artistId
+app.put('/artists/:artistId', (req, res) => {
+  const id = req.params.artistId;
+  const data = req.body;
+  const returnData = editArtistByArtistId(id, data);
+  res.status(200).send(returnData);
+})
+
+// Delete a specified artist by artistId
+app.delete('/artists/:artistId', (req, res) => {
+  const id = req.params.artistId;
+  deleteArtistByArtistId(id);
+  res.status(200).send({
+    "message": "Successfully deleted"
+  })
+})
+
+// Get all albums of a specific artist based on artistId
+app.get('/artists/:artistId/albums', (req, res) => {
+  const artistId = req.params.artistId;
+  const data = getAlbumsByArtistId(artistId);
+  res.status(200).send(data);
+})
+
+// Get a specific album's details based on albumId
+app.get('/albums/:albumId', (req, res) => {
+  const albumId = req.params.albumId;
+  const data = getAlbumByAlbumId(albumId);
+  res.status(200).send(data);
+})
+
+// Add an album to a specific artist based on artistId
+app.post('/artists/:artistId/albums', (req, res) => {
+  const artistId = req.params.artistId;
+  const data = req.body;
+  const returnData = addAlbumByArtistId(artistId, data);
+  res.status(201).send(returnData);
+})
+
+// Edit a specified album by albumId
+app.put('/albums/:albumId', (req, res) => {
+  const albumId = req.params.albumId;
+  const data = req.body;
+  const returnData = editAlbumByAlbumId(albumId, data);
+  res.status(200).send(returnData)
+})
+
+app.patch('/albums/:albumId', (req, res) => {
+  const albumId = req.params.albumId;
+  const data = req.body;
+  const returnData = editAlbumByAlbumId(albumId, data);
+  res.status(200).send(returnData)
+})
+
+// Delete a specified album by albumId
+app.delete('/albums/:albumId', (req, res) => {
+  const albumId = req.params.albumId;
+  deleteAlbumByAlbumId(albumId);
+  res.status(200).send({
+    "message": "Successfully deleted"
+  })
+})
+
+// Get all albums with names filtered by first letter
+app.get('/albums', (req, res) => {
+  const startsWith = req.query.startsWith;
+  const returnData = getFilteredAlbums(startsWith);
+  res.status(200).send(returnData);
+})
+
+// Get a specific song's details based on songId
 
 // DO NOT MODIFY
 if (require.main === module) {
