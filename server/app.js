@@ -64,8 +64,23 @@ app.get('/artists/latest/albums', (req, res) => {
   res.status(200).send(albums);
 })
 
+// long pratice
+// Get a specific artist's details based on artistId
+app.get('/artists/:artistId', (req, res) => {
+  const artistId = req.params.artistId
+  const data = getArtistByArtistId(artistId)
+  res.status(200).send(data)
+})
+
 // Edit a specified artist by artistId
 app.put('/artists/:artistId', (req, res) => {
+  const id = req.params.artistId;
+  const data = req.body;
+  const returnData = editArtistByArtistId(id, data);
+  res.status(200).send(returnData);
+})
+
+app.patch('/artists/:artistId', (req, res) => {
   const id = req.params.artistId;
   const data = req.body;
   const returnData = editArtistByArtistId(id, data);
@@ -135,6 +150,55 @@ app.get('/albums', (req, res) => {
 })
 
 // Get a specific song's details based on songId
+app.get('/songs/:songId', (req, res) => {
+  const songId = req.params.songId;
+  const returnData = getSongBySongId(songId);
+  res.status(200).send(returnData)
+})
+
+// Add a song to a specific album based on albumId
+app.post('/albums/:albumId/songs', (req, res) => {
+  const albumId = req.params.albumId;
+  const data = req.body;
+  const returnData = addSongByAlbumId(albumId, data);
+  res.status(201).send(returnData);
+})
+
+// Get all songs of a specific artist based on artistId
+app.get('/artists/:artistId/songs', (req, res) => {
+  const artistId = req.params.artistId;
+  const returnData = getSongsByArtistId(artistId)
+  res.status(200).send(returnData);
+})
+
+// Get all songs of a specific album based on albumId
+app.get('/albums/:albumId/songs', (req, res) => {
+  const albumId = req.params.albumId;
+  const data = getSongsByAlbumId(albumId)
+  res.status(200).send(data);
+})
+
+// Edit a specified song by songId
+app.put('/songs/:songId', (req, res) => {
+  const songId = req.params.songId;
+  const data = editSongBySongId(songId, req.body)
+  res.status(200).send(data)
+})
+
+app.patch('/songs/:songId', (req, res) => {
+  const songId = req.params.songId;
+  const data = editSongBySongId(songId, req.body)
+  res.status(200).send(data)
+})
+
+// Delete a specified song by songId
+app.delete('/songs/:songId', (req, res) => {
+  const songId = req.params.songId;
+  deleteSongBySongId(songId);
+  res.status(200).send({
+    "message": "Successfully deleted"
+  });
+})
 
 // DO NOT MODIFY
 if (require.main === module) {
